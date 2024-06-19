@@ -1,7 +1,8 @@
 name: Build the flutter version of the RustDesk
 
 on:
-  workflow_call:
+  workflow_dispatch:
+
 
 env:
   RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503
