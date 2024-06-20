@@ -58,6 +58,7 @@ jobs:
                gcc-multilib \
                git \
                g++ \
+               libunwind-dev \
                g++-multilib \
                libappindicator3-dev \
                libasound2-dev \
