@@ -32,7 +32,7 @@ env:
 
 jobs:
    generate-bridge-linux:
-    uses: ./.github/workflows/bridge.yml
+    uses: ./.github/workflows/bridge_new.yml
    build-rustdesk-android:
     needs: [generate-bridge-linux]
     name: build rustdesk android apk 
