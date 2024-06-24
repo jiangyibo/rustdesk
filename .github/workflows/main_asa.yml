@@ -31,8 +31,6 @@ env:
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}"
 
 jobs:
-   generate-bridge-linux:
-    uses: ./.github/workflows/bridge_new.yml
    build-rustdesk-android:
     name: build rustdesk android apk 
     runs-on: ubuntu-22.04
@@ -40,13 +38,6 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -87,6 +78,11 @@ jobs:
 
       - name: Checkout source code
         uses: actions/checkout@v3
+
+      - run: |
+            echo root$ANDROID_SDK_ROOT
+            echo home$ANDROID_SDK_HOME
+            
       - name: Install flutter
         uses: subosito/flutter-action@v2
         with:
