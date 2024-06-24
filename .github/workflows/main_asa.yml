@@ -98,6 +98,8 @@ jobs:
         with:
           ndk-version: ${{ env.NDK_VERSION }}
           add-to-path: true
+          
+      - run: echo $ANDROID_SDK_HOME
 
       - name: Setup vcpkg with Github Actions binary cache
         uses: lukka/run-vcpkg@v11
