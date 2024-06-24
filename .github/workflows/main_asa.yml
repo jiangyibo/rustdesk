@@ -106,7 +106,9 @@ jobs:
         with:
           vcpkgDirectory: /opt/artifacts/vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
+        
+      - run: flutter doctor   
+      
       - name: Install vcpkg dependencies
         run: |
           case aarch64-linux-android in
@@ -118,7 +120,9 @@ jobs:
             ;;
           esac
         shell: bash
-
+        
+      - run: flutter doctor   
+      
       - name: Restore bridge files
         uses: actions/download-artifact@master
         with:
@@ -130,7 +134,9 @@ jobs:
         with:
           toolchain: ${{ env.RUST_VERSION }}
           components: "rustfmt"
-
+        
+      - run: flutter doctor   
+      
       - name: Build rustdesk lib
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
