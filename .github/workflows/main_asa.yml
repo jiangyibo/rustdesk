@@ -34,7 +34,6 @@ jobs:
    generate-bridge-linux:
     uses: ./.github/workflows/bridge_new.yml
    build-rustdesk-android:
-    needs: [generate-bridge-linux]
     name: build rustdesk android apk 
     runs-on: ubuntu-22.04
     strategy:
@@ -94,7 +93,10 @@ jobs:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      - run: flutter doctor
+      - run: |
+            flutter doctor
+            echo root$ANDROID_SDK_ROOT
+            echo home$ANDROID_SDK_HOME
           
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
