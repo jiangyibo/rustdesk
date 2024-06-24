@@ -134,7 +134,7 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
-          echo $ANDROID_SDK_ROOT
+          flutter doctor
           rustup target add aarch64-linux-android
           cargo install cargo-ndk --version ${{ env.CARGO_NDK_VERSION }}
           case aarch64-linux-android in
@@ -155,6 +155,7 @@ jobs:
         env:
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
         run: |
+          flutter doctor
           export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH
           # temporary use debug sign config
           sed -i "s/signingConfigs.release/signingConfigs.debug/g" ./flutter/android/app/build.gradle
