@@ -31,16 +31,24 @@ env:
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}"
 
 jobs:
+   generate-bridge-linux:
+    uses: ./.github/workflows/bridge_new.yml
    build-rustdesk-android:
+    needs: [generate-bridge-linux]
     name: build rustdesk android apk 
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
 
     steps:
+      - name: Export GitHub Actions cache environment variables
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
       - name: Install dependencies
         run: |
-          ls -la /usr/local/lib/android/sdk/
           sudo apt-get update
           sudo apt-get install -y \
                clang \
@@ -76,25 +84,15 @@ jobs:
                pkg-config \
                tree \
                wget
-
       - name: Checkout source code
         uses: actions/checkout@v3
-
-      - run: |
-            ls -la /usr/local/lib/android/sdk/
-            echo root$ANDROID_SDK_ROOT
-            echo home$ANDROID_SDK_HOME
-            
       - name: Install flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      - run: |
-            flutter doctor
-            echo root$ANDROID_SDK_ROOT
-            echo home$ANDROID_SDK_HOME
+      - run: flutter doctor
           
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
@@ -160,7 +158,6 @@ jobs:
               cp ./target/aarch64-linux-android/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so
             ;;
           esac
-
       - name: Build rustdesk
         shell: bash
         env:
