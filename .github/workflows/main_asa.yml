@@ -2,7 +2,13 @@ name: build Ubuntu23.10
 
 on:
   workflow_dispatch:
-
+    inputs:
+      upload-artifact:
+        type: boolean
+        default: true
+      upload-tag:
+        type: string
+        default: "nightly"
 
 env:
   RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503
