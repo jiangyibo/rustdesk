@@ -79,6 +79,7 @@ jobs:
 
       - name: Install vcpkg dependencies
         run: |
+          cp $PWD/res/vcpkg/linux.cmake $VCPKG_ROOT/scripts/toolchains/linux.cmake
           $VCPKG_ROOT/vcpkg install --triplet arm64-ios --x-install-root="$VCPKG_ROOT/installed"
         shell: bash
 
